@@ -198,4 +198,18 @@ describe('Snake', () => {
       });
     });
   });
+
+  describe('Snake.grow()', () => {
+    head = [20, 20];
+    gridSize = 41;
+    direction = Direction.UP;
+    it('adds another segment to itself on the next step', () => {
+      testSnake = new Snake(head, gridSize, direction);
+      testSnake.grow();
+      expect(testSnake.length).toBe(3);
+
+      testSnake.step();
+      expect(testSnake.length).toBe(4);
+    });
+  });
 });

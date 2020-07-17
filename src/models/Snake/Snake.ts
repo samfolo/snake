@@ -3,11 +3,14 @@ import {Coordinate, Direction} from '../../common/types';
 
 import {getInitialSegments} from './utils';
 
+export const DEFAULT_GROWTH_POINTS = 1;
+
 export class Snake {
   private _segments: Coordinate[];
   private _head: Coordinate;
   private _gridSize: number;
   private _direction: Direction;
+  private _growthPoints: number;
 
   constructor(
     head: Coordinate,
@@ -18,6 +21,7 @@ export class Snake {
     this._segments = getInitialSegments(head, direction);
     this._gridSize = gridSize;
     this._direction = direction;
+    this._growthPoints = 0;
   }
 
   get length() {
@@ -38,10 +42,19 @@ export class Snake {
   }
 
   step() {
-    this._segments.pop();
+    if (this._growthPoints === 0) {
+      this._segments.pop();
+    } else {
+      this._growthPoints -= 1;
+    }
+
     const nextHead = this.getNextHead() as Coordinate;
     this._head = nextHead;
     this._segments = [this._head, ...this._segments];
+  }
+
+  grow(amount: number = DEFAULT_GROWTH_POINTS) {
+    this._growthPoints += amount;
   }
 
   private getNextHead() {
