@@ -7,14 +7,29 @@ describe('Snake', () => {
   let direction: Direction = Direction.UP;
 
   let testSnake: Snake;
-
-  it('is initially three cells long', () => {
+  beforeEach(() => {
     head = [10, 10];
     gridSize = 21;
     direction = Direction.UP;
 
     testSnake = new Snake(head, gridSize, direction);
-
+  });
+  it('is initially three cells long', () => {
     expect(testSnake.length).toBe(3);
+  });
+
+  describe('Snake.direction', () => {
+    it('has a default direction of UP', () => {
+      expect(testSnake.direction).toEqual(Direction.UP);
+    });
+
+    [Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT].forEach(
+      (enumOption) => {
+        it(`has a direction of ${enumOption} if passed as an argument`, () => {
+          testSnake = new Snake(head, gridSize, enumOption);
+          expect(testSnake.direction).toEqual(enumOption);
+        });
+      }
+    );
   });
 });

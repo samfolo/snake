@@ -1,25 +1,29 @@
 import {Coordinate, Direction} from '../../common/types';
 
 export class Snake {
-  public segments: Coordinate[];
-  public head: Coordinate;
-  public gridSize: number;
-  public direction: Direction;
+  private _segments: Coordinate[];
+  private _head: Coordinate;
+  private _gridSize: number;
+  private _direction: Direction;
 
   constructor(head: Coordinate, gridSize: number, direction: Direction) {
-    this.head = head;
+    this._head = head;
 
     const [row, col] = head;
-    this.segments = [
+    this._segments = [
       [row, col],
       [row - 1, col],
       [row - 2, col],
     ];
-    this.gridSize = gridSize;
-    this.direction = direction;
+    this._gridSize = gridSize;
+    this._direction = direction;
   }
 
   get length() {
-    return this.segments.length;
+    return this._segments.length;
+  }
+
+  get direction() {
+    return this._direction;
   }
 }
