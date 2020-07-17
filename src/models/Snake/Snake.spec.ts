@@ -200,10 +200,6 @@ describe('Snake', () => {
   });
 
   describe('Snake.grow()', () => {
-    head = [20, 20];
-    gridSize = 41;
-    direction = Direction.UP;
-
     it('adds another segment to itself on the next step (only)', () => {
       testSnake = new Snake(head, gridSize, direction);
       expect(testSnake.length).toBe(3);
@@ -216,6 +212,49 @@ describe('Snake', () => {
 
       testSnake.step();
       expect(testSnake.length).toBe(4);
+    });
+  });
+
+  describe('wrapping around the grid', () => {
+    [
+      {
+        direction: Direction.DOWN,
+        caseHead: [10, 10],
+        caseGridSize: 12,
+        wrappedCoordinates: [
+          [0, 10],
+          [11, 10],
+          [10, 10],
+        ],
+      },
+      {
+        direction: Direction.UP,
+        caseHead: [0, 2],
+        caseGridSize: 5,
+        wrappedCoordinates: [
+          [3, 2],
+          [4, 2],
+          [0, 2],
+        ],
+      },
+      {
+        direction: Direction.LEFT,
+        caseHead: [84, 0],
+        caseGridSize: 200,
+        wrappedCoordinates: [
+          [84, 198],
+          [84, 199],
+          [84, 0],
+        ],
+      },
+    ].forEach(({direction, caseHead, caseGridSize, wrappedCoordinates}) => {
+      it('wraps its coordinates around the boundaries of its gridSize', () => {
+        testSnake = new Snake(caseHead as Coordinate, caseGridSize, direction);
+        testSnake.step();
+        testSnake.step();
+
+        expect(testSnake.body).toEqual(wrappedCoordinates);
+      });
     });
   });
 });
