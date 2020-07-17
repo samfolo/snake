@@ -1,5 +1,6 @@
 import {SnakeErrors} from '../../common/errors';
 import {Coordinate, Direction} from '../../common/types';
+import {mod} from '../../common/utils';
 
 import {getInitialSegments} from './utils';
 
@@ -62,13 +63,13 @@ export class Snake {
 
     switch (this._direction) {
       case Direction.UP:
-        return [row - 1, col];
+        return [mod(row - 1, this._gridSize), col];
       case Direction.DOWN:
-        return [row + 1, col];
+        return [mod(row + 1, this._gridSize), col];
       case Direction.LEFT:
-        return [row, col - 1];
+        return [row, mod(col - 1, this._gridSize)];
       case Direction.RIGHT:
-        return [row, col + 1];
+        return [row, mod(col + 1, this._gridSize)];
       default:
     }
   }
