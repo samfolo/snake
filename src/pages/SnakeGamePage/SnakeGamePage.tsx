@@ -1,10 +1,7 @@
 import React from 'react';
 
+import {GamePage} from '../../components/GamePage/GamePage';
+
 export interface ISnakeGamePageProps {}
 
-export const SnakeGamePage = () => (
-  <div
-    className="game-page game-page--snake"
-    data-test-id="component-game-page-snake"
-  />
-);
+export const SnakeGamePage = () => <GamePage data-test-id="snake-game-page" />;
