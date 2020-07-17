@@ -10,7 +10,7 @@ export const GamePage: FunctionComponent<IGamePageProps> = ({
   className,
 }) => (
   <div
-    className={classnames('game-page', className)}
+    className={classnames('game_page', className)}
     data-test-id="component-game-page"
   >
     {children}
