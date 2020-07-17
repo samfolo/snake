@@ -203,10 +203,16 @@ describe('Snake', () => {
     head = [20, 20];
     gridSize = 41;
     direction = Direction.UP;
-    it('adds another segment to itself on the next step', () => {
+
+    it('adds another segment to itself on the next step (only)', () => {
       testSnake = new Snake(head, gridSize, direction);
+      expect(testSnake.length).toBe(3);
+
       testSnake.grow();
       expect(testSnake.length).toBe(3);
+
+      testSnake.step();
+      expect(testSnake.length).toBe(4);
 
       testSnake.step();
       expect(testSnake.length).toBe(4);
