@@ -10,12 +10,12 @@ export type TSetup = <T>(
 export const setup: TSetup = <T extends {}>(
   Component: ComponentType<T>,
   props: T = {} as T
-) => {
-  return mount(<Component {...props} />);
-};
+) => mount(<Component {...props} />);
 
 export type TFindByTestId = (wrapper: ReactWrapper, id: string) => ReactWrapper;
 export const findByTestId: TFindByTestId = (wrapper, id) =>
   wrapper.find(`[data-test-id="${id}"]`);
 
-export const coordToString = ([row, col]: Coordinate) => `(${col}, ${row})`;
+export const coordToString = ([row, col]: Coordinate) => `(${row}, ${col})`;
+export const coordsToString = (coords: Coordinate[]) =>
+  coords.map((coord) => coordToString(coord));

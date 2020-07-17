@@ -33,10 +33,30 @@ export class Snake {
   }
 
   changeDirection(newDirection: Direction) {
-    if (Direction[newDirection] == null) {
-      throw SnakeErrors.INVALID_DIRECTION;
-    }
-
+    if (Direction[newDirection] == null) throw SnakeErrors.INVALID_DIRECTION;
     this._direction = newDirection;
+  }
+
+  step() {
+    this._segments.pop();
+    const nextHead = this.getNextHead() as Coordinate;
+    this._head = nextHead;
+    this._segments = [this._head, ...this._segments];
+  }
+
+  private getNextHead() {
+    const [row, col] = this._head;
+
+    switch (this._direction) {
+      case Direction.UP:
+        return [row - 1, col];
+      case Direction.DOWN:
+        return [row + 1, col];
+      case Direction.LEFT:
+        return [row, col - 1];
+      case Direction.RIGHT:
+        return [row, col + 1];
+      default:
+    }
   }
 }

@@ -1,13 +1,20 @@
+import {ReactWrapper, mount} from 'enzyme';
+import React from 'react';
+import {MemoryRouter} from 'react-router';
+
 import {App} from './App';
-import {findByTestId, setup} from './test/utils';
-import {ReactWrapper} from 'enzyme';
+import {findByTestId} from './test/utils';
 
 describe('<App />', () => {
   let wrapper: ReactWrapper;
   let appComponent: ReactWrapper;
 
   beforeEach(() => {
-    wrapper = setup(App);
+    wrapper = mount(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
   });
 
   it('renders without error', () => {

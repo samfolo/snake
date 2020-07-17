@@ -1,13 +1,13 @@
 import {SnakeErrors} from '../../common/errors';
 import {Direction, Coordinate} from '../../common/types';
-import {coordToString} from '../../test/utils/testHelpers';
+import {coordsToString, coordToString} from '../../test/utils/testHelpers';
 
 import {Snake} from './Snake';
 
 describe('Snake', () => {
-  let head: Coordinate = [10, 10];
-  let gridSize: number = 21;
-  let direction: Direction = Direction.UP;
+  let head: Coordinate;
+  let gridSize: number;
+  let direction: Direction;
 
   let testSnake: Snake;
   beforeEach(() => {
@@ -33,8 +33,8 @@ describe('Snake', () => {
         caseHead: [5, 5] as Coordinate,
         expectedSegments: [
           [5, 5],
-          [4, 5],
-          [3, 5],
+          [6, 5],
+          [7, 5],
         ] as Coordinate[],
       },
       {
@@ -42,8 +42,8 @@ describe('Snake', () => {
         caseHead: [10, 10] as Coordinate,
         expectedSegments: [
           [10, 10],
-          [11, 10],
-          [12, 10],
+          [9, 10],
+          [8, 10],
         ] as Coordinate[],
       },
       {
@@ -100,5 +100,102 @@ describe('Snake', () => {
     });
   });
 
-  describe('Snake.step', () => {});
+  describe('Snake.step', () => {
+    head = [10, 10];
+    gridSize = 21;
+
+    [
+      {
+        initialDirection: Direction.UP,
+        nextValues: [
+          [9, 10],
+          [10, 10],
+          [11, 10],
+        ],
+      },
+      {
+        initialDirection: Direction.DOWN,
+        nextValues: [
+          [11, 10],
+          [10, 10],
+          [9, 10],
+        ],
+      },
+      {
+        initialDirection: Direction.LEFT,
+        nextValues: [
+          [10, 9],
+          [10, 10],
+          [10, 11],
+        ],
+      },
+      {
+        initialDirection: Direction.RIGHT,
+        nextValues: [
+          [10, 11],
+          [10, 10],
+          [10, 9],
+        ],
+      },
+    ].forEach(({initialDirection, nextValues}) => {
+      const nextCoordsString = coordsToString(nextValues as Coordinate[]);
+      it(`moves to ${nextCoordsString} when direction is set to ${initialDirection}`, () => {
+        testSnake = new Snake(head, gridSize, initialDirection);
+        testSnake.step();
+        expect(testSnake.body).toEqual(nextValues);
+      });
+    });
+
+    describe('when changing directions', () => {
+      [
+        {
+          initialDirection: Direction.LEFT,
+          nextDirection: Direction.UP,
+          nextValues: [
+            [9, 9],
+            [10, 9],
+            [10, 10],
+          ],
+        },
+        {
+          initialDirection: Direction.RIGHT,
+          nextDirection: Direction.DOWN,
+          nextValues: [
+            [11, 11],
+            [10, 11],
+            [10, 10],
+          ],
+        },
+        {
+          initialDirection: Direction.DOWN,
+          nextDirection: Direction.LEFT,
+          nextValues: [
+            [11, 9],
+            [11, 10],
+            [10, 10],
+          ],
+        },
+        {
+          initialDirection: Direction.UP,
+          nextDirection: Direction.RIGHT,
+          nextValues: [
+            [9, 11],
+            [9, 10],
+            [10, 10],
+          ],
+        },
+      ].forEach(({initialDirection, nextDirection, nextValues}) => {
+        const nextValuesString = coordsToString(nextValues as Coordinate[]);
+        it(`it finishes with coordinates ${nextValuesString} after taking one step ${initialDirection} and another ${nextDirection}`, () => {
+          testSnake = new Snake(head, gridSize, initialDirection);
+          testSnake.step();
+
+          testSnake.changeDirection(nextDirection);
+          testSnake.step();
+
+          expect(testSnake.body).toEqual(nextValues);
+        });
+      });
+    });
+  });
 });

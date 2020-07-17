@@ -1,10 +1,7 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 
-export interface ISnakeGamePageProps {}
+import {GamePage} from '../../components/GamePage/GamePage';
 
-export const SnakeGamePage = () => (
-  <div
-    className="game-page game-page--snake"
-    data-test-id="component-game-page-snake"
-  />
+export const SnakeGamePage: FunctionComponent = () => (
+  <GamePage data-test-id="snake-game-page" className="game_page--snake" />
 );
