@@ -32,5 +32,10 @@ describe('Game', () => {
       expect(row >= 0 && row < size).toBe(true);
       expect(col >= 0 && col < size).toBe(true);
     });
+
+    it('is never generated over a snake segment', () => {
+      const {location} = testGame.apple;
+      expect(mockSnake.body).not.toContain(location);
+    });
   });
 });

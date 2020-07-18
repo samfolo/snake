@@ -8,12 +8,16 @@ import {generateApple} from './utils';
 export class Game {
   private _snake: Snake;
   private _grid: GameElement[][];
-  private _apple: TApple;
+  private readonly _apple: TApple;
 
-  constructor(snake: Snake, size: number) {
+  constructor(
+    snake: Snake,
+    size: number,
+    apple: TApple = {location: [0, 0], points: 1, init: true}
+  ) {
     this._snake = snake;
-    this._apple = generateApple(size, snake);
-    this._grid = renderGrid(size, snake);
+    this._apple = generateApple(size, snake, apple);
+    this._grid = renderGrid(size, snake, this._apple);
   }
 
   get grid() {

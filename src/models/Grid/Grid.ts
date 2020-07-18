@@ -1,9 +1,15 @@
-import {GameElement} from '../../common/types';
+import {GameElement, TApple} from '../../common/types';
 
 import {Snake} from '../Snake/Snake';
 
-export const renderGrid = (size: number, snake: Snake): GameElement[][] => {
-  let grid: GameElement[][] = [];
+export type TRenderGrid = (
+  size: number,
+  snake: Snake,
+  apple?: TApple
+) => GameElement[][];
+
+export const renderGrid: TRenderGrid = (size, snake, apple) => {
+  const grid: GameElement[][] = [];
 
   for (let row = 0; row < size; row++) {
     let row: GameElement[] = [];
@@ -14,8 +20,13 @@ export const renderGrid = (size: number, snake: Snake): GameElement[][] => {
   }
 
   for (let i = 0; i < snake.length; i++) {
-    let [row, col] = snake.body[i];
+    const [row, col] = snake.body[i];
     grid[row][col] = GameElement.SNAKE_SEGMENT;
+  }
+
+  if (apple) {
+    const [row, col] = apple.location;
+    grid[row][col] = GameElement.APPLE;
   }
 
   return grid;
