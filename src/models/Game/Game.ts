@@ -1,4 +1,4 @@
-import {GameElement, TApple} from '../../common/types';
+import {GameElement, TApple, TCoordinate} from '../../common/types';
 
 import {renderGrid} from '../Grid/Grid';
 import {Snake} from '../Snake/Snake';
@@ -10,6 +10,7 @@ export class Game {
   private _size: number;
   private _grid: GameElement[][];
   private _apple: TApple;
+  private _isOver: boolean;
 
   constructor(
     snake: Snake,
@@ -20,6 +21,7 @@ export class Game {
     this._size = size;
     this._apple = generateApple(size, snake, apple);
     this._grid = renderGrid(size, snake, this._apple);
+    this._isOver = false;
   }
 
   get grid() {
@@ -34,12 +36,21 @@ export class Game {
     return this._snake;
   }
 
+  get isOver() {
+    return this._isOver;
+  }
+
   nextFrame = () => {
-    const prevSnake = this._snake;
+    const prevTail: TCoordinate = this._snake.tail;
     this._snake.step();
 
+    if (this._snake.hasCrashed) {
+      this._isOver = true;
+      return false;
+    }
+
     const [headRow, headCol] = this._snake.head;
-    this.updateSnakePosition(headRow, headCol, prevSnake);
+    this.updateSnakePosition(headRow, headCol, prevTail);
 
     const [appleRow, appleCol] = this._apple.location;
     if (appleRow === headRow && appleCol === headCol) {
@@ -53,11 +64,11 @@ export class Game {
   private updateSnakePosition = (
     headRow: number,
     headCol: number,
-    prevSnake: Snake
+    prevTail: TCoordinate
   ) => {
     this._grid[headRow][headCol] = GameElement.SNAKE_SEGMENT;
 
-    const [tailRow, tailCol] = prevSnake.tail;
+    const [tailRow, tailCol] = prevTail;
     this._grid[tailRow][tailCol] = GameElement.EMPTY_SPACE;
   };
 

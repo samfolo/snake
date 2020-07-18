@@ -1,8 +1,9 @@
 import {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT} from 'keycode-js';
+import {uniq} from 'lodash';
 
 import {SnakeErrors} from '../../common/errors';
 import {TCoordinate, Direction} from '../../common/types';
-import {mod} from '../../common/utils';
+import {mod, oppositeDirection} from '../../common/utils';
 
 import {getInitialSegments} from './utils';
 
@@ -14,6 +15,7 @@ export class Snake {
   private _gridSize: number;
   private _direction: Direction;
   private _growthPoints: number;
+  private _hasCrashed: boolean;
 
   constructor(
     head: TCoordinate,
@@ -25,6 +27,7 @@ export class Snake {
     this._gridSize = gridSize;
     this._direction = direction;
     this._growthPoints = 0;
+    this._hasCrashed = false;
 
     window.addEventListener('keydown', this);
   }
@@ -49,9 +52,17 @@ export class Snake {
     return this._segments[this._segments.length - 1];
   }
 
+  get hasCrashed() {
+    const [headRow, headCol] = this._head;
+    const restOfBody = this._segments.slice(1);
+    return restOfBody.some(([row, col]) => row === headRow && col === headCol);
+  }
+
   changeDirection = (newDirection: Direction) => {
-    if (Direction[newDirection] == null) throw SnakeErrors.INVALID_DIRECTION;
-    this._direction = newDirection;
+    if (!Direction[newDirection]) throw SnakeErrors.INVALID_DIRECTION;
+    if (newDirection !== oppositeDirection(this._direction)) {
+      this._direction = newDirection;
+    }
   };
 
   step = () => {
