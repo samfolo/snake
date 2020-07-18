@@ -1,5 +1,5 @@
 import {ReactWrapper} from 'enzyme';
-import {setup, findByTestId} from '../../test/utils';
+import {setup, findByTestId} from '../../../test/utils';
 import {GamePage} from './GamePage';
 
 describe('<GamePage />', () => {
