@@ -2,7 +2,7 @@ import {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT} from 'keycode-js';
 
 import {SnakeErrors} from '../../common/errors';
 import {TCoordinate, Direction} from '../../common/types';
-import {mod} from '../../common/utils';
+import {mod, oppositeDirection} from '../../common/utils';
 
 import {getInitialSegments} from './utils';
 
@@ -50,8 +50,11 @@ export class Snake {
   }
 
   changeDirection = (newDirection: Direction) => {
-    if (Direction[newDirection] == null) throw SnakeErrors.INVALID_DIRECTION;
-    this._direction = newDirection;
+    if (!Direction[newDirection]) throw SnakeErrors.INVALID_DIRECTION;
+    if (newDirection !== oppositeDirection(this._direction)) {
+      console.log(newDirection, this._direction);
+      this._direction = newDirection;
+    }
   };
 
   step = () => {

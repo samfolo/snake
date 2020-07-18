@@ -84,7 +84,7 @@ describe('Snake', () => {
       it('updates its direction when passed one via changeDirection()', () => {
         expect(testSnake.direction).toEqual(Direction.UP);
 
-        [Direction.DOWN, Direction.LEFT, Direction.RIGHT].forEach(
+        [Direction.LEFT, Direction.DOWN, Direction.RIGHT].forEach(
           (enumOption) => {
             testSnake.changeDirection(enumOption);
             expect(testSnake.direction).toEqual(enumOption);
@@ -194,6 +194,35 @@ describe('Snake', () => {
           testSnake.step();
 
           expect(testSnake.body).toEqual(nextValues);
+        });
+      });
+
+      [
+        {
+          initialDirection: Direction.LEFT,
+          nextDirection: Direction.RIGHT,
+        },
+        {
+          initialDirection: Direction.RIGHT,
+          nextDirection: Direction.LEFT,
+        },
+        {
+          initialDirection: Direction.DOWN,
+          nextDirection: Direction.UP,
+        },
+        {
+          initialDirection: Direction.UP,
+          nextDirection: Direction.DOWN,
+        },
+      ].forEach(({initialDirection, nextDirection}) => {
+        it('cannot turn back on itself', () => {
+          testSnake = new Snake(head, gridSize, initialDirection);
+          testSnake.step();
+
+          testSnake.changeDirection(nextDirection);
+          testSnake.step();
+
+          expect(testSnake.direction).toEqual(initialDirection);
         });
       });
     });
