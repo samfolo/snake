@@ -3,10 +3,8 @@ import {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT} from 'keycode-js';
 import {SnakeErrors} from '../../common/errors';
 import {TCoordinate, Direction} from '../../common/types';
 import {mod, oppositeDirection} from '../../common/utils';
-
+import {DEFAULT_SNAKE_GROWTH_POINTS} from '../../const';
 import {getInitialSegments} from './utils';
-
-export const DEFAULT_GROWTH_POINTS = 1;
 
 export class Snake {
   private _segments: TCoordinate[];
@@ -78,7 +76,7 @@ export class Snake {
     this._stepped = true;
   };
 
-  grow = (amount: number = DEFAULT_GROWTH_POINTS) => {
+  grow = (amount: number = DEFAULT_SNAKE_GROWTH_POINTS) => {
     this._growthPoints += amount;
   };
 
