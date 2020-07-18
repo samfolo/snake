@@ -5,11 +5,16 @@ import {SnakeErrors} from './errors';
 export const mod = (target: number, boundary: number) =>
   ((target % boundary) + boundary) % boundary;
 
-export type TUseInterval = (callback: () => any, delay?: number | null) => void;
+export type TUseInterval = (
+  callback: () => any,
+  delay?: number | null,
+  breakCondition?: boolean
+) => void;
 
 export const useInterval: TUseInterval = (
   callback: () => any,
-  delay = null
+  delay = null,
+  breakCondition
 ) => {
   const savedCallback: MutableRefObject<typeof callback | undefined> = useRef();
 
@@ -24,11 +29,11 @@ export const useInterval: TUseInterval = (
       }
     }
 
-    if (delay !== null) {
+    if (delay !== null && !breakCondition) {
       const id = setInterval(tick, delay);
       return () => clearInterval(id);
     }
-  }, [delay]);
+  }, [delay, breakCondition]);
 };
 
 export const oppositeDirection = (direction: Direction): Direction =>
