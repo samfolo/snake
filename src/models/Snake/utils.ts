@@ -1,10 +1,10 @@
 import {SnakeErrors} from '../../common/errors';
-import {Coordinate, Direction} from '../../common/types';
+import {TCoordinate, Direction} from '../../common/types';
 
 export const getInitialSegments = (
-  [row, col]: Coordinate,
+  [row, col]: TCoordinate,
   direction: Direction
-): Coordinate[] => {
+): TCoordinate[] => {
   switch (direction) {
     case Direction.UP:
       return [

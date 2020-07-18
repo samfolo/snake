@@ -1,5 +1,5 @@
 import {SnakeErrors} from '../../common/errors';
-import {Coordinate, Direction} from '../../common/types';
+import {TCoordinate, Direction} from '../../common/types';
 import {mod} from '../../common/utils';
 
 import {getInitialSegments} from './utils';
@@ -7,14 +7,14 @@ import {getInitialSegments} from './utils';
 export const DEFAULT_GROWTH_POINTS = 1;
 
 export class Snake {
-  private _segments: Coordinate[];
-  private _head: Coordinate;
+  private _segments: TCoordinate[];
+  private _head: TCoordinate;
   private _gridSize: number;
   private _direction: Direction;
   private _growthPoints: number;
 
   constructor(
-    head: Coordinate,
+    head: TCoordinate,
     gridSize: number,
     direction: Direction = Direction.UP
   ) {
@@ -49,7 +49,7 @@ export class Snake {
       this._growthPoints -= 1;
     }
 
-    const nextHead = this.getNextHead() as Coordinate;
+    const nextHead = this.getNextHead() as TCoordinate;
     this._head = nextHead;
     this._segments = [this._head, ...this._segments];
   }

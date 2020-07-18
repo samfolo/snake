@@ -1,4 +1,6 @@
-export type Coordinate = [number, number];
+export type TApple = {location: TCoordinate; points: number};
+export type TCoordinate = [number, number];
+
 export enum Direction {
   LEFT = 'LEFT',
   RIGHT = 'RIGHT',

@@ -1,11 +1,11 @@
 import {SnakeErrors} from '../../common/errors';
-import {Direction, Coordinate} from '../../common/types';
+import {Direction, TCoordinate} from '../../common/types';
 import {coordsToString, coordToString} from '../../test/utils/testHelpers';
 
 import {Snake} from './Snake';
 
 describe('Snake', () => {
-  let head: Coordinate;
+  let head: TCoordinate;
   let gridSize: number;
   let direction: Direction;
 
@@ -30,43 +30,43 @@ describe('Snake', () => {
     [
       {
         caseDirection: Direction.UP,
-        caseHead: [5, 5] as Coordinate,
+        caseHead: [5, 5] as TCoordinate,
         expectedSegments: [
           [5, 5],
           [6, 5],
           [7, 5],
-        ] as Coordinate[],
+        ] as TCoordinate[],
       },
       {
         caseDirection: Direction.DOWN,
-        caseHead: [10, 10] as Coordinate,
+        caseHead: [10, 10] as TCoordinate,
         expectedSegments: [
           [10, 10],
           [9, 10],
           [8, 10],
-        ] as Coordinate[],
+        ] as TCoordinate[],
       },
       {
         caseDirection: Direction.LEFT,
-        caseHead: [8, 8] as Coordinate,
+        caseHead: [8, 8] as TCoordinate,
         expectedSegments: [
           [8, 8],
           [8, 9],
           [8, 10],
-        ] as Coordinate[],
+        ] as TCoordinate[],
       },
       {
         caseDirection: Direction.RIGHT,
-        caseHead: [14, 14] as Coordinate,
+        caseHead: [14, 14] as TCoordinate,
         expectedSegments: [
           [14, 14],
           [14, 13],
           [14, 12],
-        ] as Coordinate[],
+        ] as TCoordinate[],
       },
     ].forEach(({caseDirection, caseHead, expectedSegments}) => {
       let formattedSegmentString: string = expectedSegments
-        .map((segment: Coordinate) => coordToString(segment))
+        .map((segment: TCoordinate) => coordToString(segment))
         .join(', ');
 
       it(`has a direction of ${caseDirection} if passed as an argument`, () => {
@@ -138,7 +138,7 @@ describe('Snake', () => {
         ],
       },
     ].forEach(({initialDirection, nextValues}) => {
-      const nextCoordsString = coordsToString(nextValues as Coordinate[]);
+      const nextCoordsString = coordsToString(nextValues as TCoordinate[]);
       it(`moves to ${nextCoordsString} when direction is set to ${initialDirection}`, () => {
         testSnake = new Snake(head, gridSize, initialDirection);
         testSnake.step();
@@ -185,8 +185,8 @@ describe('Snake', () => {
           ],
         },
       ].forEach(({initialDirection, nextDirection, nextValues}) => {
-        const nextValuesString = coordsToString(nextValues as Coordinate[]);
-        it(`it finishes with coordinates ${nextValuesString} after taking one step ${initialDirection} and another ${nextDirection}`, () => {
+        const nextValuesString = coordsToString(nextValues as TCoordinate[]);
+        it(`it finishes with TCoordinates ${nextValuesString} after taking one step ${initialDirection} and another ${nextDirection}`, () => {
           testSnake = new Snake(head, gridSize, initialDirection);
           testSnake.step();
 
@@ -221,7 +221,7 @@ describe('Snake', () => {
         direction: Direction.DOWN,
         caseHead: [10, 10],
         caseGridSize: 12,
-        wrappedCoordinates: [
+        wrappedTCoordinates: [
           [0, 10],
           [11, 10],
           [10, 10],
@@ -231,7 +231,7 @@ describe('Snake', () => {
         direction: Direction.UP,
         caseHead: [0, 2],
         caseGridSize: 5,
-        wrappedCoordinates: [
+        wrappedTCoordinates: [
           [3, 2],
           [4, 2],
           [0, 2],
@@ -241,19 +241,19 @@ describe('Snake', () => {
         direction: Direction.LEFT,
         caseHead: [84, 0],
         caseGridSize: 200,
-        wrappedCoordinates: [
+        wrappedTCoordinates: [
           [84, 198],
           [84, 199],
           [84, 0],
         ],
       },
-    ].forEach(({direction, caseHead, caseGridSize, wrappedCoordinates}) => {
-      it('wraps its coordinates around the boundaries of its gridSize', () => {
-        testSnake = new Snake(caseHead as Coordinate, caseGridSize, direction);
+    ].forEach(({direction, caseHead, caseGridSize, wrappedTCoordinates}) => {
+      it('wraps its TCoordinates around the boundaries of its gridSize', () => {
+        testSnake = new Snake(caseHead as TCoordinate, caseGridSize, direction);
         testSnake.step();
         testSnake.step();
 
-        expect(testSnake.body).toEqual(wrappedCoordinates);
+        expect(testSnake.body).toEqual(wrappedTCoordinates);
       });
     });
   });
