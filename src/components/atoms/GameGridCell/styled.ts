@@ -8,7 +8,6 @@ export interface IGameGridCellContainerProps {
 export const GameGridCellContainer = styled('div')<IGameGridCellContainerProps>`
   width: 10px;
   height: 10px;
-  border: 1px solid red;
   background: ${({gameElement}) =>
     ({
       [GameElement.SNAKE_SEGMENT]: 'green',
