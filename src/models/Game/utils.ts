@@ -8,7 +8,7 @@ export type TGenerateApple = (
 ) => TApple;
 
 export const generateApple: TGenerateApple = (size, snake, apple) => {
-  if (apple?.init) return apple;
+  if (apple && !apple.init) return apple;
 
   const row: number = Math.floor(Math.random() * size);
   const col = Math.floor(Math.random() * size);

@@ -34,7 +34,7 @@ export class Game {
     return this._snake;
   }
 
-  nextFrame() {
+  nextFrame = () => {
     const prevSnake = this._snake;
     this._snake.step();
 
@@ -48,22 +48,22 @@ export class Game {
       this._snake.grow(this._apple.points);
       this.generateNewApple();
     }
-  }
+  };
 
-  private updateSnakePosition(
+  private updateSnakePosition = (
     headRow: number,
     headCol: number,
     prevSnake: Snake
-  ) {
+  ) => {
     this._grid[headRow][headCol] = GameElement.SNAKE_SEGMENT;
 
     const [tailRow, tailCol] = prevSnake.tail;
     this._grid[tailRow][tailCol] = GameElement.EMPTY_SPACE;
-  }
+  };
 
-  private generateNewApple() {
+  private generateNewApple = () => {
     this._apple = generateApple(this._size, this._snake);
     const [newAppleRow, newAppleCol] = this._apple.location;
     this._grid[newAppleRow][newAppleCol] = GameElement.APPLE;
-  }
+  };
 }
