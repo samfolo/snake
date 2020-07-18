@@ -37,6 +37,14 @@ export class Snake {
     return this._segments;
   }
 
+  get head() {
+    return this._head;
+  }
+
+  get tail() {
+    return this._segments[this._segments.length - 1];
+  }
+
   changeDirection(newDirection: Direction) {
     if (Direction[newDirection] == null) throw SnakeErrors.INVALID_DIRECTION;
     this._direction = newDirection;
