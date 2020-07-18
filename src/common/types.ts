@@ -1,4 +1,9 @@
-export type TApple = {location: TCoordinate; points: number; init?: boolean};
+export type TApple = {
+  location: TCoordinate;
+  growthPoints: number;
+  scorePoints: number;
+  init?: boolean;
+};
 export type TCoordinate = [number, number];
 
 export enum Direction {

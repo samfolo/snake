@@ -1,4 +1,8 @@
 import {GameElement, TApple, TCoordinate} from '../../common/types';
+import {
+  DEFAULT_APPLE_SCORE_POINTS,
+  DEFAULT_SNAKE_GROWTH_POINTS,
+} from '../../const';
 
 import {renderGrid} from '../Grid/Grid';
 import {Snake} from '../Snake/Snake';
@@ -11,16 +15,24 @@ export class Game {
   private _grid: GameElement[][];
   private _apple: TApple;
   private _isOver: boolean;
+  private _score: number;
 
   constructor(
     snake: Snake,
     size: number,
-    apple: TApple = {location: [0, 0], points: 1, init: true}
+    apple: TApple = {
+      location: [0, 0],
+      growthPoints: DEFAULT_SNAKE_GROWTH_POINTS,
+      scorePoints: DEFAULT_APPLE_SCORE_POINTS,
+      init: true,
+    }
   ) {
     this._snake = snake;
     this._size = size;
     this._apple = generateApple(size, snake, apple);
     this._grid = renderGrid(size, snake, this._apple);
+
+    this._score = 0;
     this._isOver = false;
   }
 
@@ -40,6 +52,10 @@ export class Game {
     return this._isOver;
   }
 
+  get score() {
+    return this._score;
+  }
+
   nextFrame = () => {
     const prevTail: TCoordinate = this._snake.tail;
     this._snake.step();
@@ -54,9 +70,8 @@ export class Game {
 
     const [appleRow, appleCol] = this._apple.location;
     if (appleRow === headRow && appleCol === headCol) {
-      // TODO: increment score here ...
-
-      this._snake.grow(this._apple.points);
+      this._score += this._apple.scorePoints;
+      this._snake.grow(this._apple.growthPoints);
       this.generateNewApple();
     }
   };

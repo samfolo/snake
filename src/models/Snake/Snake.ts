@@ -1,13 +1,10 @@
 import {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT} from 'keycode-js';
-import {uniq} from 'lodash';
 
 import {SnakeErrors} from '../../common/errors';
 import {TCoordinate, Direction} from '../../common/types';
 import {mod, oppositeDirection} from '../../common/utils';
-
+import {DEFAULT_SNAKE_GROWTH_POINTS} from '../../const';
 import {getInitialSegments} from './utils';
-
-export const DEFAULT_GROWTH_POINTS = 1;
 
 export class Snake {
   private _segments: TCoordinate[];
@@ -15,7 +12,7 @@ export class Snake {
   private _gridSize: number;
   private _direction: Direction;
   private _growthPoints: number;
-  private _hasCrashed: boolean;
+  private _stepped: boolean;
 
   constructor(
     head: TCoordinate,
@@ -27,7 +24,7 @@ export class Snake {
     this._gridSize = gridSize;
     this._direction = direction;
     this._growthPoints = 0;
-    this._hasCrashed = false;
+    this._stepped = true;
 
     window.addEventListener('keydown', this);
   }
@@ -60,8 +57,9 @@ export class Snake {
 
   changeDirection = (newDirection: Direction) => {
     if (!Direction[newDirection]) throw SnakeErrors.INVALID_DIRECTION;
-    if (newDirection !== oppositeDirection(this._direction)) {
+    if (this._stepped && newDirection !== oppositeDirection(this._direction)) {
       this._direction = newDirection;
+      this._stepped = false;
     }
   };
 
@@ -75,9 +73,10 @@ export class Snake {
     const nextHead = this.getNextHead() as TCoordinate;
     this._head = nextHead;
     this._segments = [this._head, ...this._segments];
+    this._stepped = true;
   };
 
-  grow = (amount: number = DEFAULT_GROWTH_POINTS) => {
+  grow = (amount: number = DEFAULT_SNAKE_GROWTH_POINTS) => {
     this._growthPoints += amount;
   };
 

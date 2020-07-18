@@ -1,7 +1,9 @@
 import {ReactWrapper, mount} from 'enzyme';
 import React, {ComponentType} from 'react';
+import {ThemeProvider} from 'styled-components';
 
 import {TCoordinate} from '../../common/types';
+import {theme} from '../../theme';
 
 export type TSetup = <T>(
   Component: ComponentType<T>,
@@ -10,7 +12,12 @@ export type TSetup = <T>(
 export const setup: TSetup = <T extends {}>(
   Component: ComponentType<T>,
   props: T = {} as T
-) => mount(<Component {...props} />);
+) =>
+  mount(
+    <ThemeProvider theme={theme}>
+      <Component {...props} />
+    </ThemeProvider>
+  );
 
 export type TFindByTestId = (wrapper: ReactWrapper, id: string) => ReactWrapper;
 export const findByTestId: TFindByTestId = (wrapper, id) =>

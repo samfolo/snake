@@ -1,0 +1,2 @@
+export const DEFAULT_APPLE_SCORE_POINTS = 5;
+export const DEFAULT_SNAKE_GROWTH_POINTS = 1;

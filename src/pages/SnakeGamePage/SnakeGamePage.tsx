@@ -2,13 +2,17 @@ import React, {FunctionComponent, useState} from 'react';
 
 import {TCoordinate, Direction} from '../../common/types';
 import {useInterval} from '../../common/utils';
+import {ScorePanel} from '../../components/molecules/ScorePanel/ScorePanel';
+import {GameContainer} from '../../components/atoms/Containers/styled';
 import {GameGrid} from '../../components/organisms/GameGrid/GameGrid';
 import {GamePage} from '../../components/organisms/GamePage/GamePage';
 import {Game} from '../../models/Game/Game';
 import {Snake} from '../../models/Snake/Snake';
 
-const initialHead: TCoordinate = [10, 10]; // TODO: set in menu
-const initialGridSize: number = 21; // TODO: set in menu
+const initialGridSize: number = 30; // TODO: set in menu
+
+const middle = Math.floor(initialGridSize / 2) - 1;
+const initialHead: TCoordinate = [middle, middle]; // TODO: set in menu
 
 const initialSnake: Snake = new Snake(
   initialHead,
@@ -27,13 +31,16 @@ export const SnakeGamePage: FunctionComponent = () => {
       game.nextFrame();
       updateFrameCount((frameCount) => frameCount + 1);
     },
-    60,
+    50,
     game.isOver
   );
 
   return (
-    <GamePage data-test-id="snake-game-page" className="game_page--snake">
-      <GameGrid data={game?.grid} />
+    <GamePage data-test-id="snake-game-page" className="game-page__snake">
+      <GameContainer>
+        <ScorePanel score={game?.score} />
+        <GameGrid data={game?.grid} />
+      </GameContainer>
     </GamePage>
   );
 };

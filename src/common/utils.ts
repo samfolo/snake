@@ -1,6 +1,5 @@
 import {MutableRefObject, useEffect, useRef} from 'react';
 import {Direction} from './types';
-import {SnakeErrors} from './errors';
 
 export const mod = (target: number, boundary: number) =>
   ((target % boundary) + boundary) % boundary;

@@ -1,5 +1,10 @@
-import {Snake} from '../Snake/Snake';
 import {TApple, TCoordinate} from '../../common/types';
+import {
+  DEFAULT_APPLE_SCORE_POINTS,
+  DEFAULT_SNAKE_GROWTH_POINTS,
+} from '../../const';
+
+import {Snake} from '../Snake/Snake';
 
 export type TGenerateApple = (
   size: number,
@@ -19,7 +24,12 @@ export const generateApple: TGenerateApple = (size, snake, apple) => {
         row === segmentRow && col === segmentCol
     )
   ) {
-    return {location: [row, col], points: 1};
+    return {
+      location: [row, col],
+      growthPoints: DEFAULT_SNAKE_GROWTH_POINTS,
+      scorePoints: DEFAULT_APPLE_SCORE_POINTS,
+      init: false,
+    };
   } else {
     return generateApple(size, snake);
   }
