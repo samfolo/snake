@@ -1,3 +1,5 @@
+import {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT} from 'keycode-js';
+
 import {SnakeErrors} from '../../common/errors';
 import {TCoordinate, Direction} from '../../common/types';
 import {mod} from '../../common/utils';
@@ -23,6 +25,8 @@ export class Snake {
     this._gridSize = gridSize;
     this._direction = direction;
     this._growthPoints = 0;
+
+    window.addEventListener('keydown', this);
   }
 
   get length() {
@@ -45,12 +49,12 @@ export class Snake {
     return this._segments[this._segments.length - 1];
   }
 
-  changeDirection(newDirection: Direction) {
+  changeDirection = (newDirection: Direction) => {
     if (Direction[newDirection] == null) throw SnakeErrors.INVALID_DIRECTION;
     this._direction = newDirection;
-  }
+  };
 
-  step() {
+  step = () => {
     if (this._growthPoints === 0) {
       this._segments.pop();
     } else {
@@ -60,13 +64,26 @@ export class Snake {
     const nextHead = this.getNextHead() as TCoordinate;
     this._head = nextHead;
     this._segments = [this._head, ...this._segments];
-  }
+  };
 
-  grow(amount: number = DEFAULT_GROWTH_POINTS) {
+  grow = (amount: number = DEFAULT_GROWTH_POINTS) => {
     this._growthPoints += amount;
-  }
+  };
 
-  private getNextHead() {
+  handleEvent = (e: KeyboardEvent) => {
+    e.preventDefault();
+
+    switch (e.type) {
+      case 'keydown':
+        const handleKeydown = this.directions.get(e.keyCode);
+        if (handleKeydown) handleKeydown();
+        break;
+      default:
+        return false;
+    }
+  };
+
+  private getNextHead = () => {
     const [row, col] = this._head;
 
     switch (this._direction) {
@@ -80,5 +97,11 @@ export class Snake {
         return [row, mod(col + 1, this._gridSize)];
       default:
     }
-  }
+  };
+
+  private directions = new Map<number, () => void>()
+    .set(KEY_RIGHT, () => this.changeDirection(Direction.RIGHT))
+    .set(KEY_LEFT, () => this.changeDirection(Direction.LEFT))
+    .set(KEY_UP, () => this.changeDirection(Direction.UP))
+    .set(KEY_DOWN, () => this.changeDirection(Direction.DOWN));
 }

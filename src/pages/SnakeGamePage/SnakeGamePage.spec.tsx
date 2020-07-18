@@ -1,5 +1,5 @@
 import {ReactWrapper} from 'enzyme';
-import {setup, findByTestId} from '../../test/utils';
+import {findByTestId, setup} from '../../test/utils';
 import {SnakeGamePage} from './SnakeGamePage';
 
 describe('<SnakeGamePage />', () => {
@@ -13,5 +13,10 @@ describe('<SnakeGamePage />', () => {
 
   it('renders without error', () => {
     expect(snakeGamePageComponent).toHaveLength(1);
+  });
+
+  it('renders a <GamePage />', () => {
+    const gamePage = findByTestId(snakeGamePageComponent, 'snake-game-page');
+    expect(gamePage.exists()).toBe(true);
   });
 });
