@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, memo} from 'react';
 
 import {GameElement} from '../../../common/types';
 
@@ -10,13 +10,12 @@ export interface IGameGridCellProps {
   gameElement: GameElement;
 }
 
-export const GameGridCell: FunctionComponent<IGameGridCellProps> = ({
-  className,
-  gameElement,
-}) => (
-  <GameGridCellContainer
-    gameElement={gameElement}
-    className={classnames('game-grid__cell', className)}
-    data-test-id="component-game-grid-cell"
-  />
+export const GameGridCell: FunctionComponent<IGameGridCellProps> = memo(
+  ({className, gameElement}) => (
+    <GameGridCellContainer
+      gameElement={gameElement}
+      className={classnames('game-grid__cell', className)}
+      data-test-id="component-game-grid-cell"
+    />
+  )
 );

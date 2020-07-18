@@ -7,8 +7,10 @@ import {GamePage} from '../../components/organisms/GamePage/GamePage';
 import {Game} from '../../models/Game/Game';
 import {Snake} from '../../models/Snake/Snake';
 
-const initialHead: TCoordinate = [10, 10]; // TODO: set in menu
-const initialGridSize: number = 21; // TODO: set in menu
+const initialGridSize: number = 50; // TODO: set in menu
+
+const middle = Math.floor(initialGridSize / 2) - 1;
+const initialHead: TCoordinate = [middle, middle]; // TODO: set in menu
 
 const initialSnake: Snake = new Snake(
   initialHead,
@@ -27,7 +29,7 @@ export const SnakeGamePage: FunctionComponent = () => {
       game.nextFrame();
       updateFrameCount((frameCount) => frameCount + 1);
     },
-    60,
+    10,
     game.isOver
   );
 

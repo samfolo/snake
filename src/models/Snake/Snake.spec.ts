@@ -86,6 +86,7 @@ describe('Snake', () => {
 
         [Direction.LEFT, Direction.DOWN, Direction.RIGHT].forEach(
           (enumOption) => {
+            testSnake.step();
             testSnake.changeDirection(enumOption);
             expect(testSnake.direction).toEqual(enumOption);
           }
