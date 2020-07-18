@@ -7,7 +7,7 @@ import {
 import {renderGrid} from '../Grid/Grid';
 import {Snake} from '../Snake/Snake';
 
-import {generateApple} from './utils';
+import {generateApple, updateGameSpeed} from './utils';
 
 export class Game {
   private _snake: Snake;
@@ -16,6 +16,7 @@ export class Game {
   private _apple: TApple;
   private _isOver: boolean;
   private _score: number;
+  private _speed: number;
 
   constructor(
     snake: Snake,
@@ -25,7 +26,8 @@ export class Game {
       growthPoints: DEFAULT_SNAKE_GROWTH_POINTS,
       scorePoints: DEFAULT_APPLE_SCORE_POINTS,
       init: true,
-    }
+    },
+    speed: number = 80
   ) {
     this._snake = snake;
     this._size = size;
@@ -34,6 +36,7 @@ export class Game {
 
     this._score = 0;
     this._isOver = false;
+    this._speed = speed;
   }
 
   get grid() {
@@ -56,6 +59,10 @@ export class Game {
     return this._score;
   }
 
+  get speed() {
+    return this._speed;
+  }
+
   nextFrame = () => {
     const prevTail: TCoordinate = this._snake.tail;
     this._snake.step();
@@ -71,6 +78,8 @@ export class Game {
     const [appleRow, appleCol] = this._apple.location;
     if (appleRow === headRow && appleCol === headCol) {
       this._score += this._apple.scorePoints;
+
+      this._speed = updateGameSpeed(this._speed, this._apple.scorePoints);
       this._snake.grow(this._apple.growthPoints);
       this.generateNewApple();
     }
