@@ -1,0 +1,18 @@
+@import '../palette/variables';
+
+$border-radius-base: 8px !default;
+$border-radius-medium: $border-radius-base * 1.5 !default;
+$border-radius-large: $border-radius-base * 2 !default;
+$border-radius-x-large: $border-radius-base * 3 !default;
+$border-radius-jumbo: $border-radius-base * 4 !default;
+
+$box-shadow-1: 2px 0 30px 10px $palette-dark-tint-half !default;
+
+:export {
+  borderRadiusBase: $border-radius-base;
+  borderRadiusMedium: $border-radius-medium;
+  borderRadiusLarge: $border-radius-large;
+  borderRadiusXLarge: $border-radius-x-large;
+  borderRadiusJumbo: $border-radius-jumbo;
+  boxShadow1: $box-shadow-1;
+}

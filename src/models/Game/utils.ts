@@ -2,6 +2,7 @@ import {TApple, TCoordinate} from '../../common/types';
 import {
   DEFAULT_APPLE_SCORE_POINTS,
   DEFAULT_SNAKE_GROWTH_POINTS,
+  MAXIMUM_GAME_SPEED,
 } from '../../const';
 
 import {Snake} from '../Snake/Snake';
@@ -33,4 +34,9 @@ export const generateApple: TGenerateApple = (size, snake, apple) => {
   } else {
     return generateApple(size, snake);
   }
+};
+
+export const updateGameSpeed = (speed: number, points: number) => {
+  const newSpeed = speed - Math.floor(points / 5) / 2;
+  return Math.max(newSpeed, MAXIMUM_GAME_SPEED);
 };

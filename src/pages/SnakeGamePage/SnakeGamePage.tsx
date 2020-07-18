@@ -31,7 +31,7 @@ export const SnakeGamePage: FunctionComponent = () => {
       game.nextFrame();
       updateFrameCount((frameCount) => frameCount + 1);
     },
-    50,
+    game.speed,
     game.isOver
   );
 

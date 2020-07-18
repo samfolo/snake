@@ -1,0 +1,22 @@
+@import '../palette//variables';
+
+$border-primary: 1px solid $palette-primary !default;
+$border-secondary: 1px solid $palette-secondary !default;
+
+$font-size-base: 20px !default;
+$font-size-small: $font-size-base * 0.66666666666 !default;
+$font-size-medium: $font-size-base * 1.5 !default;
+$font-size-large: $font-size-base * 1.83333333333 !default;
+$font-size-x-large: $font-size-base * 2.5 !default;
+$font-size-jumbo: $font-size-base * 3 !default;
+
+:export {
+  borderPrimary: $border-primary;
+  borderSecondary: $border-secondary;
+  fontSizeSmall: $font-size-small;
+  fontSizeBase: $font-size-base;
+  fontSizeMedium: $font-size-medium;
+  fontSizeLarge: $font-size-large;
+  fontSizeXLarge: $font-size-x-large;
+  fontSizeJumbo: $font-size-jumbo;
+}
