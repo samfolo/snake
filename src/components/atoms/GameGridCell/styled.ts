@@ -8,10 +8,10 @@ export interface IGameGridCellContainerProps {
 export const GameGridCellContainer = styled('div')<IGameGridCellContainerProps>`
   width: 10px;
   height: 10px;
-  background: ${({gameElement}) =>
+  background: ${(p) =>
     ({
-      [GameElement.SNAKE_SEGMENT]: 'green',
-      [GameElement.APPLE]: 'white',
-      [GameElement.EMPTY_SPACE]: 'darkgrey',
-    }[gameElement] || 'red')};
+      [GameElement.SNAKE_SEGMENT]: p.theme.palette.paletteSecondary,
+      [GameElement.APPLE]: p.theme.palette.paletteAccent,
+      [GameElement.EMPTY_SPACE]: p.theme.palette.primaryTintQuarter,
+    }[p.gameElement] || 'red')};
 `;

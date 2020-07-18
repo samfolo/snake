@@ -15,6 +15,6 @@ describe('<GamePage />', () => {
   });
 
   it('renders without error', () => {
-    expect(gamePageComponent).toHaveLength(1);
+    expect(gamePageComponent.exists()).toBe(true);
   });
 });
