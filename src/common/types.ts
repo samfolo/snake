@@ -5,3 +5,8 @@ export enum Direction {
   UP = 'UP',
   DOWN = 'DOWN',
 }
+export enum GameElement {
+  EMPTY_SPACE = 0,
+  SNAKE_SEGMENT = 1,
+  APPLE = 2,
+}
