@@ -20,4 +20,4 @@ export const GROWTH_POINTS_FOR: TAppleConfigValues = {
 
 export const MAXIMUM_GAME_SPEED = 10;
 
-export const SHINY_APPLE_LIFESPAN_MS = 5000;
+export const SHINY_APPLE_LIFESPAN_MS = 3500;

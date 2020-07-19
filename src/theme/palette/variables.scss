@@ -5,14 +5,11 @@ $palette-secondary: #44839c !default;
 $palette-accent: #005eeb !default;
 $palette-pale: #ebecec !default;
 $palette-dark: #3a415f !default;
-$palette-shine: #f7de00 !default;
+$palette-shine: #e27b05 !default;
 
 $palette-dark-tint-half: transparentize($palette-dark, 0.9) !default;
 $palette-primary-tint-quarter: transparentize($palette-primary, 0.9) !default;
-$palette-secondary-tint-quarter: transparentize(
-  $palette-secondary,
-  0.9
-) !default;
+$palette-secondary-tint-quarter: transparentize($palette-secondary, 0.9) !default;
 
 :export {
   palettePrimary: $palette-primary;
