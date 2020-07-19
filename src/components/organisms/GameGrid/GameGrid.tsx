@@ -10,7 +10,7 @@ import {GameGridContainer} from './styled';
 
 export interface IGameGridProps {
   className?: string;
-  data?: GameElement[][]; // TODO: type this properly
+  data?: GameElement[][];
 }
 
 export const GameGrid: FunctionComponent<IGameGridProps> = ({

@@ -10,8 +10,9 @@ export const GameGridCellContainer = styled('div')<IGameGridCellContainerProps>`
   height: 10px;
   background: ${(p) =>
     ({
-      [GameElement.SNAKE_SEGMENT]: p.theme.palette.paletteSecondary,
       [GameElement.APPLE]: p.theme.palette.paletteAccent,
+      [GameElement.SHINY_APPLE]: p.theme.palette.paletteShine,
+      [GameElement.SNAKE_SEGMENT]: p.theme.palette.paletteSecondary,
       [GameElement.EMPTY_SPACE]: p.theme.palette.primaryTintQuarter,
     }[p.gameElement] || 'red')};
 `;
