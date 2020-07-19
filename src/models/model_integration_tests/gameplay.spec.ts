@@ -2,6 +2,9 @@ import {TApple, Direction, TCoordinate} from '../../common/types';
 import {
   DEFAULT_APPLE_SCORE_POINTS,
   DEFAULT_SNAKE_GROWTH_POINTS,
+  INITIAL_SNAKE_LENGTH,
+  SHINY_APPLE_SCORE_POINTS,
+  SHINY_APPLE_SNAKE_GROWTH_POINTS,
 } from '../../const';
 
 import {Game} from '../Game/Game';
@@ -49,6 +52,37 @@ describe('gameplay logic', () => {
     it('updates the score', () => {
       testGame.nextFrame();
       expect(testGame.score).toBe(DEFAULT_APPLE_SCORE_POINTS);
+    });
+
+    describe('a shiny apple', () => {
+      beforeEach(() => {
+        testApple = {
+          location: [9, 10],
+          growthPoints: SHINY_APPLE_SNAKE_GROWTH_POINTS,
+          scorePoints: SHINY_APPLE_SCORE_POINTS,
+        };
+
+        testSnake = new Snake(testHead, testSize, Direction.UP);
+        testGame = new Game(testSnake, testSize, testApple);
+      });
+
+      it('grows by the number of points the apple is worth', () => {
+        const initialApple = testGame.apple;
+        testGame.nextFrame();
+
+        for (let i = 0; i < initialApple.growthPoints; i++) {
+          testGame.nextFrame();
+        }
+
+        expect(testSnake.length).toBe(
+          INITIAL_SNAKE_LENGTH + SHINY_APPLE_SNAKE_GROWTH_POINTS
+        );
+      });
+
+      it('updates the score', () => {
+        testGame.nextFrame();
+        expect(testGame.score).toBe(SHINY_APPLE_SCORE_POINTS);
+      });
     });
   });
 

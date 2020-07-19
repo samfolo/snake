@@ -6,3 +6,4 @@ export const secondaryTintQuarter: string;
 export const palettePale: string;
 export const paletteDark: string;
 export const darkTintHalf: string;
+export const paletteShine: string;
